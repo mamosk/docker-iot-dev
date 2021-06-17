@@ -1,0 +1,32 @@
+version: '3.2'
+services:
+    mosquitto:
+        image: eclipse-mosquitto:1.6.12
+        ports:
+            - "1883:1883"
+        networks:
+            dev_net:
+                aliases:
+                    - broker
+        volumes:
+            - mqtt-data:/mosquitto/data
+            - mqtt-logs:/mosquitto/log
+    mongodb:
+        image: mongo:3.4
+        command: --auth
+        ports:
+            - "27017:27017"
+        networks:
+            dev_net:
+                aliases:
+                    - mongo
+        volumes:
+            - mongo-db-data:/data/db
+            - mongo-db-logs:/var/log/mongodb
+volumes:
+    mongo-db-data:
+    mongo-db-logs:
+    mqtt-data:
+    mqtt-logs:
+networks:
+    dev_net:
