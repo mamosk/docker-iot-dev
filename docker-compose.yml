@@ -13,7 +13,7 @@ services:
             - mqtt-logs:/mosquitto/log
     mongodb:
         image: mongo:3.4
-        command: --auth
+        command: --auth # comment this line to disable authentication
         ports:
             - "27017:27017"
         networks:
