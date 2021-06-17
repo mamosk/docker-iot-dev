@@ -1,6 +1,12 @@
 # docker-iot-dev
 Useful containers for IoT developement.
 
-Windows: launch `docker stack deploy.bat` script
+## Container
+- **MongoDB**: document-based no-SQL database, on port `27017`
+  > you can momentarily disable `--auth` in order to configure users
+- **Mosquitto**: MQTT broker
 
-Linux/Mac: pull requests are welcome :)
+## Usage
+- **Windows**: launch `docker stack deploy.bat` script
+- **Linux/Mac**: pull requests are welcome :)
+
