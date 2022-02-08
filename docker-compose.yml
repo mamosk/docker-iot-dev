@@ -4,7 +4,7 @@ services:
     image: eclipse-mosquitto:1.6.12
     container_name: mosquitto
     restart: unless-stopped
-    ports: [1883:1883]
+    ports: [18883:1883]
     networks: {dev_net: {aliases: [mosquitto]}}
     volumes:
     - mosquitto-data:/mosquitto/data
