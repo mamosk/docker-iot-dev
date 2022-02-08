@@ -38,12 +38,12 @@ services:
     networks: {dev_net: {aliases: [excalidraw]}}
   softplc:
     image: fbarresi/softplc:1.1.48-${ARCH:-linux}
-    container_name: siemens
+    container_name: softplc
     restart: unless-stopped
     ports:
     - 8102:80
     - 102:102
-    networks: {dev_net: {aliases: [siemens]}}
+    networks: {dev_net: {aliases: [softplc]}}
 volumes:
   mongo-db-data:
   mongo-db-logs:
