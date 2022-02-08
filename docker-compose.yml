@@ -4,7 +4,8 @@ services:
     image: eclipse-mosquitto:1.6.12
     container_name: mosquitto
     restart: unless-stopped
-    ports: [18883:1883]
+    ports:
+    - 127.0.0.1:18883:1883
     networks: {dev_net: {aliases: [mosquitto]}}
     volumes:
     - mosquitto-data:/mosquitto/data
@@ -13,7 +14,8 @@ services:
     image: mongo:3.4
     container_name: mongo
     restart: unless-stopped
-    ports: [27017:27017]
+    ports:
+    - 127.0.0.1:27017:27017
     networks: {dev_net: {aliases: [mongo]}}
     volumes:
     - mongo-db-data:/data/db
@@ -26,7 +28,8 @@ services:
     - POSTGRES_DB=${POSTGRES_DB:-dev}
     - POSTGRES_USER=${POSTGRES_USER:-dev}
     - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-dev}
-    ports: [5432:5432]
+    ports:
+    - 127.0.0.1:5432:5432
     networks: {dev_net: {aliases: [postgres]}}
     volumes:
     - postgres-data:/var/lib/postgresql/data/
@@ -34,15 +37,16 @@ services:
     image: excalidraw/excalidraw
     container_name: excalidraw
     restart: unless-stopped
-    ports: [3791:80]
+    ports:
+    - 127.0.0.1:3791:80
     networks: {dev_net: {aliases: [excalidraw]}}
   softplc:
     image: fbarresi/softplc:1.1.48-${ARCH:-linux}
     container_name: softplc
     restart: unless-stopped
     ports:
-    - 8102:80
-    - 102:102
+    - 127.0.0.1:8102:80
+    - 127.0.0.1:102:102
     networks: {dev_net: {aliases: [softplc]}}
 volumes:
   mongo-db-data:
