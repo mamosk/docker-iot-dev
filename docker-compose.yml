@@ -37,7 +37,7 @@ services:
     ports: [3791:80]
     networks: {dev_net: {aliases: [excalidraw]}}
   softplc:
-    image: fbarresi/softplc
+    image: fbarresi/softplc:1.1.48-${ARCH:-linux}
     container_name: siemens
     restart: unless-stopped
     ports:
