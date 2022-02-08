@@ -1,32 +1,54 @@
 version: '3.2'
 services:
-    mosquitto:
-        image: eclipse-mosquitto:1.6.12
-        ports:
-            - "1883:1883"
-        networks:
-            dev_net:
-                aliases:
-                    - broker
-        volumes:
-            - mqtt-data:/mosquitto/data
-            - mqtt-logs:/mosquitto/log
-    mongodb:
-        image: mongo:3.4
-        command: --auth # comment this line to disable authentication
-        ports:
-            - "27017:27017"
-        networks:
-            dev_net:
-                aliases:
-                    - mongo
-        volumes:
-            - mongo-db-data:/data/db
-            - mongo-db-logs:/var/log/mongodb
+  mosquitto:
+    image: eclipse-mosquitto:1.6.12
+    container_name: mosquitto
+    restart: unless-stopped
+    ports: [1883:1883]
+    networks: {dev_net: {aliases: [mosquitto]}}
+    volumes:
+    - mosquitto-data:/mosquitto/data
+    - mosquitto-logs:/mosquitto/log
+  mongo:
+    image: mongo:3.4
+    container_name: mongo
+    restart: unless-stopped
+    ports: [27017:27017]
+    networks: {dev_net: {aliases: [mongo]}}
+    volumes:
+    - mongo-db-data:/data/db
+    - mongo-db-logs:/var/log/mongodb
+  postgres:
+    image: postgres:13
+    container_name: postgres
+    restart: unless-stopped
+    environment:
+    - POSTGRES_DB=${POSTGRES_DB:-dev}
+    - POSTGRES_USER=${POSTGRES_USER:-dev}
+    - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-dev}
+    ports: [5432:5432]
+    networks: {dev_net: {aliases: [postgres]}}
+    volumes:
+    - postgres-data:/var/lib/postgresql/data/
+  excalidraw:
+    image: excalidraw/excalidraw
+    container_name: excalidraw
+    restart: unless-stopped
+    ports: [3791:80]
+    networks: {dev_net: {aliases: [excalidraw]}}
+  softplc:
+    image: fbarresi/softplc
+    container_name: siemens
+    restart: unless-stopped
+    ports:
+    - 8102:80
+    - 102:102
+    networks: {dev_net: {aliases: [siemens]}}
 volumes:
-    mongo-db-data:
-    mongo-db-logs:
-    mqtt-data:
-    mqtt-logs:
+  mongo-db-data:
+  mongo-db-logs:
+  mosquitto-data:
+  mosquitto-logs:
+  postgres-data:
 networks:
-    dev_net:
+  dev_net:
